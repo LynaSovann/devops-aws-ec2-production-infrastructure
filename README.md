@@ -28,29 +28,31 @@ The architecture focuses on:
 
 ### 1. Create Key Pair
 
-    - Generate a Key Pair to allow SSH access to your EC2 instances. **awsproject-prod-key.pem**
+- Generate a Key Pair to allow SSH access to your EC2 instances. **awsproject-prod-key.pem**
 
 ### 2. Generate Security Groups
 
-    - **awsproject-ALB-SG** - Controls traffic to the load balancer.
-    - **awsproject-app-SG** - For the application EC2 instance (Frontend).
-    - **awsproject-api-SG** - For the API EC2 instance.
-    - **awsproject-backend-SG** - For Postgresql and Minio access.
+- **awsproject-ALB-SG** - Controls traffic to the load balancer.
+- **awsproject-app-SG** - For the application EC2 instance (Frontend).
+- **awsproject-api-SG** - For the API EC2 instance.
+- **awsproject-backend-SG** - For Postgresql and Minio access.
 
 ### 3. Launch EC2 Instances
 
-    - **awsproject-app** - Hosts the frontend.
-    - **awsproject-api** - Hosts the api service.
-    - **awsproject-db** - Postgresql database server.
-    - **awsproject-minio** - Minio server.
+- **awsproject-app** - Hosts the frontend.
+- **awsproject-api** - Hosts the api service.
+- **awsproject-db** - Postgresql database server.
+- **awsproject-minio** - Minio server.
 
-      ---
-      **awsproject-minio**
-      - Name: awsproject-minio
-      - Key Pair: awsproject-prod-key.pem
-      - Security Group: awsproject-backend-SG
-      - API: Amazon Linux 2023, t2.micro
-      - user data
+---
+
+**awsproject-minio**
+
+- Name: awsproject-minio
+- Key Pair: awsproject-prod-key.pem
+- Security Group: awsproject-backend-SG
+- API: Amazon Linux 2023, t2.micro
+- user data
 
 ```bash
 #!/bin/bash
