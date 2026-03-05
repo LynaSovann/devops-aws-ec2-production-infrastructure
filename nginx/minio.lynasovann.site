@@ -1,0 +1,35 @@
+# Upstream MinIO backend
+upstream minio_backend {
+    server minio.awsproject.internal:9000;   # MinIO VM internal IP
+}
+
+# Redirect HTTP → HTTPS
+server {
+    listen 80;
+    server_name minio.lynasovann.site;
+
+    return 301 https://$host$request_uri;
+}
+
+# HTTPS server
+server {
+    listen 443 ssl http2;
+    server_name minio.lynasovann.site;
+
+    ssl_certificate /etc/letsencrypt/live/minio.lynasovann.site/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/minio.lynasovann.site/privkey.pem;
+
+    # Strong SSL
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+
+    location / {
+        proxy_pass http://minio_backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}

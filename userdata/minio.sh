@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# MinIO Installation and SystemD Setup for Amazon Linux/CentOS
+# MinIO Installation and SystemD Setup for Ubuntu
 
 MINIO_USER="minio"
 MINIO_GROUP="minio"
@@ -9,17 +9,21 @@ MINIO_DATA_DIR="/mnt/data/minio"
 MINIO_CONFIG_DIR="/etc/minio"
 MINIO_VERSION="latest"
 
-# Create minio user and group
+# Update system and install dependencies
+apt update -y
+apt install -y wget sudo
+
+# Create minio group and user if not exists
 if ! id "$MINIO_USER" &>/dev/null; then
-    groupadd -r "$MINIO_GROUP"
-    useradd -r -s /sbin/nologin -g "$MINIO_GROUP" "$MINIO_USER"
+    groupadd --system "$MINIO_GROUP"
+    useradd --system --no-create-home --shell /usr/sbin/nologin -g "$MINIO_GROUP" "$MINIO_USER"
 fi
 
-# Create directories
+# Create data and config directories
 mkdir -p "$MINIO_DATA_DIR" "$MINIO_CONFIG_DIR"
 chown -R "$MINIO_USER:$MINIO_GROUP" "$MINIO_DATA_DIR" "$MINIO_CONFIG_DIR"
 
-# Download and install MinIO
+# Download MinIO binary
 wget -q https://dl.min.io/server/minio/release/linux-amd64/minio -O /usr/local/bin/minio
 chmod +x /usr/local/bin/minio
 
