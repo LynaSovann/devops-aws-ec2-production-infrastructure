@@ -4,7 +4,7 @@ This section describes how the **MinIO Object Storage service** is deployed on a
 
 ## Architecture Overview
 
-<img src="./diagram/minio-setup-architecture.png">
+<img src="./diagram/minio-setup-architecture.png" width="700">
 
 ### Request Flow
 
