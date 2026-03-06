@@ -39,5 +39,5 @@ spring.datasource.password=demo123
 
 ### Note:
 
-- The database is **internal-only, connected via **AWS private network\*\*.
+- The database is **internal-only**, connected via **AWS private network**.
 - Credentials are stored in **application.properties** for API service.
